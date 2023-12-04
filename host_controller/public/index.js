@@ -30,7 +30,7 @@ e_submit.onclick = async function(e) {
             default: return showNotification(NOTIFICATIONS.serverError(res.statusText));
         }
     }
-    window.location = "/code"
+    window.location = "./code"
     console.log("Auth suscess")
 
 }
