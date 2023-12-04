@@ -1,0 +1,11 @@
+version: '2.4'
+networks:
+  # proxy to roborios for deployment 
+  frc_codespace_rio_connect: 
+    driver: bridge
+    ipam:
+      subnet: 10.46.69.0/24
+      ip_range: 10.46.69.2/32
+      gateway: 10.46.69.1
+
+volumes:

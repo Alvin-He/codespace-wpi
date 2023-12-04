@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Code Access Platform - frc4669</title>
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="noti.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@500&display=swap" rel="stylesheet"> 
+
+</head>
+<body class="page">
+    <div class="content">
+        <!-- <div class="nav">
+            <h1 class="title">Galileo Robotics RCAP</h1>
+        </div> -->
+        <div class="login">
+            <img class="login-favicon" src="login-favicon.png">
+            <h3 class="login-title">Remote Code Access Platform</h3>
+            <hr width="90%">
+            <div class="login-group">
+                <p class="login-prompt">Username:</p>
+                <input class="login-field" type="text" name="name" id="name" required>
+            </div>
+            
+            <div class="gaph"></div>
+            <div class="login-group">
+                <p class="login-prompt">Password:</p>
+                <input class="login-field" type="password" name="password" id="password">
+            </div>
+            <div class="gaph"></div>
+            <div class="gaph"></div>
+            <div class="login-group">
+                <input class="login-submit" type="submit" value="Submit" id="submit">
+            </div>
+        </div>
+    </div>
+    <div class="notification" id="noti" hidden>
+        <img class="noti-icon" src="icon/explorer_110.png">
+        <pre class="noti-text" id="noti-text"></pre>
+    </div>
+    <script src="index.js"></script>
+</body>
+</html>

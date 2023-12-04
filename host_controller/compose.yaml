@@ -1,0 +1,23 @@
+
+services:
+  controller:
+    build: .
+    image: codespace-project/controller
+    volumes:
+      - type: bind
+        source: "${PROJECT_DIR}/nginx/conf.d/"
+        target: "/etc/nginx/conf.d/"
+      - type: bind
+        source: "${PROJECT_DIR}/data/"
+        target: "/var/data/"
+      - type: bind
+        source: "${PROJECT_DIR}/public/"
+        target: "/var/www/public"
+    ports:
+      - "127.0.0.50:10000-10020:10000-10020"
+    networks:
+      - rprox-127.0.0.50-10000-11000
+
+networks:
+  rprox-127.0.0.50-10000-11000:
+    external: true

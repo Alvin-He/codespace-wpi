@@ -1,0 +1,19 @@
+.notification {
+    position: absolute;
+    z-index: 10000;
+    left: 0;
+    top: 0;
+    display: flex;
+    background-color: red;
+    padding: 0.75rem;
+}
+
+.noti-icon {
+    width: calc(32 * 0.2rem);
+    height: calc(32 * 0.2rem);
+}
+
+.noti-text {
+    font-size: large;
+    font-weight: bolder;
+}
