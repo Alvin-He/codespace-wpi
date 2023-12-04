@@ -15,7 +15,7 @@ e_submit.onclick = async function(e) {
         "passhash": await computePasshash(passwordSanitaized)
     }
     
-    let res = await fetch("/authorize", {
+    let res = await fetch("./authorize", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
