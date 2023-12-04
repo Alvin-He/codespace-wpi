@@ -52,6 +52,7 @@ ADD --chown=system ./sources/vscode_userSettings/settings.json ./server_data/dat
 
 USER 0
 ADD ./start_up.bash /usr/sbin/start_up.bash
+RUN chmod 777 /usr/sbin/start_up.bash
 CMD /usr/sbin/start_up.bash
 
 EXPOSE 22
