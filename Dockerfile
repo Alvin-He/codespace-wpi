@@ -41,7 +41,7 @@ ADD --chown=system ./sources/wpilib/2023/roborio/ ./wpilib/2023/roborio
 
 # decompresses to code 
 # ADD --chown=system ./sources/vscode_cli_alpine_x64_cli.tar.gz ./vscode/bin/
-ADD --chown=system ./sources/vscode_cli_alpine_x64_arm64.tar.gz ./vscode/bin/
+ADD --chown=system ./sources/vscode_cli_alpine_arm64_cli.tar.gz ./vscode/bin/
 ENV PATH=/home/system/vscode/bin:${PATH}
 ENV DONT_PROMPT_WSL_INSTALL=true 
 
