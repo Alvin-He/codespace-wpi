@@ -1,7 +1,5 @@
-*/target
-*/Cargo.lock
-/host_controller/target
-/host_controller/Cargo.lock
+**/target/
+**/Cargo.lock
 
 
 /sources
