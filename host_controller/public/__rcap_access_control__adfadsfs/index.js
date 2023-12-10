@@ -30,11 +30,13 @@ e_submit.onclick = async function(e) {
             default: return showNotification(NOTIFICATIONS.serverError(res.statusText));
         }
     }
-    window.location = "./code"
+    window.location = "/"
     console.log("Auth suscess")
 
 }
-
+e_submit.addEventListener("keydown", (e) => {
+    if (e.key == "Enter") e_submit.onclick(e); 
+});
 async function computePasshash(password) {
     let hash = await crypto.subtle.digest("SHA-256", (new TextEncoder()).encode(password));
     let hashStringBuf = "";
