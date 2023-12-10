@@ -80,7 +80,7 @@ async fn server_loop(shared_state: Arc<AppState>) -> Result<(), Box<dyn std::err
 
     let server_routing = Router::new()
         .route("/v1/auth", get(auth))
-        .route("/v1/setdeauthorize", get(deauthorize))
+        .route("/v1/deauthorize", get(deauthorize))
         .route("/v1/authorize", post(authorize))
         .route("/v1/add_user", post(add_user))
         .with_state(shared_state)
@@ -98,13 +98,13 @@ async fn server_loop(shared_state: Arc<AppState>) -> Result<(), Box<dyn std::err
 async fn deauthorize(state: State<Arc<AppState>> , req: Request<axum::body::Body>) -> Response<body::Body> {
     let user_cookie = delete_cookie("X-RCAP-Access-User");
     let token_cookie = delete_cookie("X-RCAP-Access-Token");
+    let app_cookie = delete_cookie("X-Target-App");
 
-    let access_revoked_cookie = config_access_cookie("X-RCAP-Access-Revoked", "true"); 
     let res = Response::builder()
         .header("Set-Cookie", user_cookie)
         .header("Set-Cookie", token_cookie)
-        .header("Set-Cookie", access_revoked_cookie)
-        .header("Location", "/")
+        .header("Set-Cookie", app_cookie)
+        .header("Location", "/frc4669")
         .status(302).body(empty()).unwrap();
     return res;
 }
@@ -174,9 +174,11 @@ async fn authorize(state: State<Arc<AppState>>, req: Json<JsonAuthorizeStruct>) 
     // println!("{}, {}", res_json, user_record.valid_token); 
     let user_cookie = config_access_cookie("X-RCAP-Access-User", &req.user);
     let token_cookie = config_access_cookie("X-RCAP-Access-Token", &new_token);
+    let app_cookie = config_access_cookie("X-Target-App", "RCAP");
     let res = Response::builder()
         .header("Set-Cookie", user_cookie)
         .header("Set-Cookie", token_cookie)
+        .header("Set-Cookie", app_cookie)
         .status(200).body(empty()).unwrap();
     return res;
 }
