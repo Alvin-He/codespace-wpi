@@ -69,7 +69,6 @@ RUN mkdir ./bin/cli user_data server_data extensions
 ADD --chown=system --chmod=777 ./sources/extensions ./extensions
 ADD --chown=system --chmod=777 ./sources/vscode_userSettings/settings.json ./server_data/data/Machine/settings.json
 
-RUN echo cache invalidate
 USER 0
 ADD ./start_up.bash /usr/sbin/start_up.bash
 RUN chmod 777 /usr/sbin/start_up.bash
