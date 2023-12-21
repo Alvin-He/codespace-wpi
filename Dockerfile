@@ -28,23 +28,24 @@ WORKDIR ${_home_dir}
 # working under user account now
 USER system 
 
-# file copy prep and copy from host
+# prep directories
 RUN mkdir wpilib vscode 
-
+RUN mkdir ./wpilib/2023
 # #wpilib java copy 
 # ADD --chown=system --chmod=777 ./sources/wpilib/2023/jdk ./wpilib/2023/jdk
 # ENV JAVA_HOME=/home/system/wpilib/2023/jdk
 # ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
 
 # java 17 install 
-RUN mkdir -p ./wpilib/2023/jdk
-# ENV JAVA_HOME=/home/system/wpilib/2023/jdk
-ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
+
 ADD --chown=system --chmod=777 ./java_install.bash ./java_install.bash
 # install script need to be ran with root
 USER 0 
 RUN ./java_install.bash
 USER system
+# ENV JAVA_HOME=/home/system/wpilib/2023/jdk
+ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
+
 # #wpilib toolchain copy 
 # ADD --chown=system --chmod=777 ./sources/wpilib/2023/roborio/ ./wpilib/2023/roborio
 
