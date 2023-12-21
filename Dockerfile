@@ -54,22 +54,26 @@ ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
 # WORKDIR ${_home_dir}/GradleRIO
 # RUN ./gradlew installRoboRioToolchain
 
-# # decompresses to code 
-# # ADD --chown=system ./sources/vscode_cli_alpine_x64_cli.tar.gz ./vscode/bin/
-# ADD --chown=system --chmod=777 ./sources/vscode_cli_alpine_arm64_cli.tar.gz ./vscode/bin/
-# ENV PATH=/home/system/vscode/bin:${PATH}
-# ENV DONT_PROMPT_WSL_INSTALL=true 
+# set up the shared wpilib toolchain directory
+RUN mkdir -p ./wpilib/2023/ && ln -s /mnt/shared_caches/roborio ./wpilib/2023/
 
-# WORKDIR ${_home_dir}/vscode
-# RUN mkdir ./bin/cli user_data server_data extensions 
-# # ADD ./sources/wpilib/2023/vsCodeExtensions ./wpilib/vsVodeExtensions
-# ADD --chown=system --chmod=777 ./sources/extensions ./extensions
-# ADD --chown=system --chmod=777 ./sources/vscode_userSettings/settings.json ./server_data/data/Machine/settings.json
+# decompresses to code 
+# ADD --chown=system ./sources/vscode_cli_alpine_x64_cli.tar.gz ./vscode/bin/
+ADD --chown=system --chmod=777 ./sources/vscode_cli_alpine_arm64_cli.tar.gz ./vscode/bin/
+ENV PATH=/home/system/vscode/bin:${PATH}
+ENV DONT_PROMPT_WSL_INSTALL=true 
 
-# USER 0
-# ADD ./start_up.bash /usr/sbin/start_up.bash
-# RUN chmod 777 /usr/sbin/start_up.bash
-# CMD /usr/sbin/start_up.bash
+WORKDIR ${_home_dir}/vscode
+RUN mkdir ./bin/cli user_data server_data extensions 
+# ADD ./sources/wpilib/2023/vsCodeExtensions ./wpilib/vsVodeExtensions
+ADD --chown=system --chmod=777 ./sources/extensions ./extensions
+ADD --chown=system --chmod=777 ./sources/vscode_userSettings/settings.json ./server_data/data/Machine/settings.json
+
+RUN echo cache invalidate
+USER 0
+ADD ./start_up.bash /usr/sbin/start_up.bash
+RUN chmod 777 /usr/sbin/start_up.bash
+CMD /usr/sbin/start_up.bash
 
 # EXPOSE 22
 # #EXPOSE 3389
