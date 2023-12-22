@@ -5,7 +5,7 @@ RUN apt-get update -y
 RUN apt-get update --fix-missing -y
 RUN apt-get upgrade -y 
 
-# # install libraries
+# install libraries
 # technically build-essential is not needed, but libc-bin will error if we don't pre install it from build-essential first
 RUN apt install build-essential -y
 RUN apt install sudo -y
@@ -29,46 +29,44 @@ WORKDIR ${_home_dir}
 USER system 
 
 # prep directories
-RUN mkdir wpilib vscode 
+RUN mkdir wpi_codespace wpilib vscode 
 RUN mkdir ./wpilib/2023
-# #wpilib java copy 
-# ADD --chown=system --chmod=777 ./sources/wpilib/2023/jdk ./wpilib/2023/jdk
-# ENV JAVA_HOME=/home/system/wpilib/2023/jdk
-# ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
+
+# copy over env files for internal scripts
+ADD --chown=system --chmod=777 ./.env ./wpi_codespace/.env
+ADD --chown=system --chmod=777 ./config.conf ./wpi_codespace/config.conf
 
 # java 17 install 
-ADD --chown=system --chmod=777 ./java_install.bash ./java_install.bash
+ADD --chown=system --chmod=777 ./java_install.bash ./wpi_codespace/java_install.bash
 # install script need to be ran with root
 USER 0 
-RUN ./java_install.bash && rm ./java_install.bash
+RUN ./wpi_codespace/java_install.bash
 USER system
 # ENV JAVA_HOME=/home/system/wpilib/2023/jdk
 ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
 
 # set up symlinks to shared_cache volume
-ADD --chown=system --chmod=777 ./configure_mounting.bash ./configure_mounting.bash
-RUN ./configure_mounting.bash && rm ./configure_mounting.bash
+ADD --chown=system --chmod=777 ./configure_mounting.bash ./wpi_codespace/configure_mounting.bash
+RUN ./wpi_codespace/configure_mounting.bash
 
-
-# decompresses to code 
+# download vscode cli 
+# ADD --chown=system --chmod=777 ./downloader.bash ./wpi_codespace/downloader.bash
+# RUN ./wpi_codespace/downloader.bash vscode ./vscode/bin/
 ADD --chown=system ./sources/vscode_cli_alpine_x64_cli.tar.gz ./vscode/bin/
-# ADD --chown=system --chmod=777 ./sources/vscode_cli_alpine_arm64_cli.tar.gz ./vscode/bin/
 ENV PATH=/home/system/vscode/bin:${PATH}
 ENV DONT_PROMPT_WSL_INSTALL=true 
 
 WORKDIR ${_home_dir}/vscode
-RUN mkdir ./bin/cli user_data server_data extensions 
+RUN mkdir user_data server_data extensions 
 # ADD ./sources/wpilib/2023/vsCodeExtensions ./wpilib/vsVodeExtensions
 ADD --chown=system --chmod=777 ./sources/extensions ./extensions
 ADD --chown=system --chmod=777 ./sources/vscode_userSettings/settings.json ./server_data/data/Machine/settings.json
 
 USER 0
-ADD ./start_up.bash /usr/sbin/start_up.bash
-ADD ./get_rio_toolchain.bash /usr/sbin/get_rio_toolchain.bash
-RUN chmod 777 /usr/sbin/start_up.bash /usr/sbin/get_rio_toolchain.bash
-WORKDIR /home/system
-CMD /usr/sbin/start_up.bash
-
+WORKDIR /home/system/
+ADD --chmod=777 ./start_up.bash ./wpi_codespace/start_up.bash
+CMD /home/system/wpi_codespace/start_up.bash
+# CMD bash
 # EXPOSE 22
 # #EXPOSE 3389
 # EXPOSE 8000

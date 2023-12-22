@@ -1,7 +1,7 @@
 #! /bin/bash
 
-k_comp_year=2023
-
+source /home/system/wpi_codespace/.env
+source /home/system/wpi_codespace/config.conf
 
 e_MESSAGES=(
   #0
@@ -36,7 +36,7 @@ e_handel_boot_fail() {
 
 #check mounts
 mount_targets_to_check=( 
-  "/home/system/wpilib/$k_comp_year/roborio"
+  "/home/system/wpilib/$COMP_YEAR/roborio"
   "/home/system/.gradle/caches"
   "/home/system/.gradle/permwrapper"
 )
@@ -84,8 +84,6 @@ if [ $UID -eq 0 ]; then
   is_mounts_valid true
   e_handel_boot_fail 3 false
 
-  echo "root boot passed"
-
   exec su "system" "$0" -- "$flag_boot_proceed"
 fi 
 [[ -z $1 ]] && e_handel_boot_fail 2
@@ -99,10 +97,10 @@ is_mounts_valid
 e_handel_boot_fail 3
 
 #install the rio toolchain if we haven't
-if [[ -z "$(ls -A /home/system/wpilib/$k_comp_year/roborio)" ]]; then 
-  source /usr/sbin/get_rio_toolchain.bash
+if [[ -z "$(ls -A /home/system/wpilib/$COMP_YEAR/roborio)" ]]; then 
+  source /home/system/wpi_codespace/downloader.bash rioToolChain /home/system/wpilib/$COMP_YEAR/roborio/
 fi
 
-cd /home/system/vscode
-./bin/code serve-web --cli-data-dir ./bin/cli --server-data-dir ./server_data --user-data-dir ./user_data --extensions-dir ./extensions --host 0.0.0.0 --port 8000 --without-connection-token --accept-server-license-terms
+cd /home/system/
+./vscode/bin/code serve-web --cli-data-dir ./vscode/bin/cli --server-data-dir ./vscode/server_data --user-data-dir ./vscode/user_data --extensions-dir ./vscode/extensions --host 0.0.0.0 --port 8000 --without-connection-token --accept-server-license-terms
 

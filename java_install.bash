@@ -5,9 +5,8 @@ if [ $UID -ne 0 ]; then
     exit
 fi
 
-
-COMP_YEAR=2023
-JAVA_REL=17
+source /home/system/wpi_codespace/.env
+source /home/system/wpi_codespace/config.conf
 
 set -ex
 apt-get install -y --no-install-recommends openjdk-$JAVA_REL-jdk-headless
