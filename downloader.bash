@@ -4,11 +4,23 @@ set -ex
 source /home/system/wpi_codespace/.env
 source /home/system/wpi_codespace/config.conf
 
+target=$1
 path=$2
+
+# attempt to get a lock of the install path
+get_lock() {
+    if [[ $FLOCKED ]]; then 
+        echo "Lock acquired, starting download..."
+        return
+    fi
+    echo "Locking install path..."
+    export FLOCKED=true
+    flock -e $path -c "$0 $target $path"
+    exit 0
+}
 
 #$1-download link
 download_vscode() {
-    mkdir -p $path
     cd $path
     wget "$1" -O vscode_cli.tar.gz
     tar -zxf vscode_cli.tar.gz
@@ -25,9 +37,13 @@ download_rioToolChain() {
 }
 
 ARCH=$(arch)
-
-
-case $1 in 
+mkdir -p $path
+if [[ ! -z $(ls $path) ]]; then 
+    echo "Another container/process already handled the download, skipping $target"
+    exit 0
+fi # exit if another process already handled the download
+get_lock
+case $target in 
     vscode)
         case $ARCH in 
         "x86_64")
