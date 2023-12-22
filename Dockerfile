@@ -50,9 +50,8 @@ ADD --chown=system --chmod=777 ./configure_mounting.bash ./wpi_codespace/configu
 RUN ./wpi_codespace/configure_mounting.bash
 
 # download vscode cli 
-# ADD --chown=system --chmod=777 ./downloader.bash ./wpi_codespace/downloader.bash
-# RUN ./wpi_codespace/downloader.bash vscode ./vscode/bin/
-ADD --chown=system ./sources/vscode_cli_alpine_x64_cli.tar.gz ./vscode/bin/
+ADD --chown=system --chmod=777 ./downloader.bash ./wpi_codespace/downloader.bash
+RUN ./wpi_codespace/downloader.bash vscode ./vscode/bin/
 ENV PATH=/home/system/vscode/bin:${PATH}
 ENV DONT_PROMPT_WSL_INSTALL=true 
 
