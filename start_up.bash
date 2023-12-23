@@ -98,7 +98,7 @@ e_handel_boot_fail 3
 
 #install the rio toolchain if we haven't
 if [[ -z "$(ls -A /home/system/wpilib/$COMP_YEAR/roborio)" ]]; then 
-  source /home/system/wpi_codespace/downloader.bash rioToolChain /home/system/wpilib/$COMP_YEAR/roborio/
+  /home/system/wpi_codespace/downloader.bash rioToolChain /home/system/wpilib/$COMP_YEAR/roborio/
 fi
 
 cd /home/system/
