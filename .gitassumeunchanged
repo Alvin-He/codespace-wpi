@@ -1,0 +1,2 @@
+# files that we provide a default for, but is untracked as it's expected for them to be modified
+git update-index --assume-unchanged ./host_controller/data/users.csv
