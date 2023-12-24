@@ -10,4 +10,4 @@ ALL defaults are just frc4669
  
 *ALSO MODIFY host_controller/nginx/conf.d/http/maps.conf so the containers are mapped correctly* 
 
-Files in data and conf.d are synced to the host_controller service automatically, just do `docker compose down && docker compose up` in host_controller to reload nginx
+Files in data and conf.d are synced to the host_controller service automatically, just do `docker compose down && docker compose up -d` in host_controller to reload nginx
