@@ -1,8 +1,8 @@
 #! /bin/bash
 set -ex
 #$1-target, $2-download to path
-source /home/system/wpi_codespace/.env
-source /home/system/wpi_codespace/config.conf
+source /usr/share/wpi_codespace/.env
+source /usr/share/wpi_codespace/config.conf
 
 target=$1
 path=$2

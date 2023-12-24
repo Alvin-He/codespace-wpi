@@ -1,7 +1,7 @@
 #! /bin/bash
 
-source /home/system/wpi_codespace/.env
-source /home/system/wpi_codespace/config.conf
+source /usr/share/wpi_codespace/.env
+source /usr/share/wpi_codespace/config.conf
 
 e_MESSAGES=(
   #0
@@ -98,7 +98,7 @@ e_handel_boot_fail 3
 
 #install the rio toolchain if we haven't
 if [[ -z "$(ls -A /home/system/wpilib/$COMP_YEAR/roborio)" ]]; then 
-  /home/system/wpi_codespace/downloader.bash rioToolChain /home/system/wpilib/$COMP_YEAR/roborio/
+  /usr/share/wpi_codespace/downloader.bash rioToolChain /home/system/wpilib/$COMP_YEAR/roborio/
 fi
 
 cd /home/system/

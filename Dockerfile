@@ -23,35 +23,41 @@ ARG PASSWD=frc4669
 RUN _system_user_passwd=$(perl -e 'print crypt($ARGV[0], "password")' ${PASSWD}) &&\
     useradd system -p ${_system_user_passwd} -d ${_home_dir} -m -G sudo -s /bin/bash
 
+#upload internal scripts 
+ARG _script_path=/usr/share/wpi_codespace
+RUN mkdir ${_script_path} && chmod 755 ${_script_path}
+# env files for internal scripts
+ADD --chmod=755 ./.env ${_script_path}/.env
+ADD --chmod=755 ./config.conf ${_script_path}/config.conf
+# internal scripts
+ADD --chmod=755 ./java_install.bash ${_script_path}/java_install.bash
+ADD --chmod=755 ./configure_mounting.bash ${_script_path}/configure_mounting.bash
+ADD --chmod=777 ./downloader.bash ${_script_path}/downloader.bash
+ADD --chmod=777 ./start_up.bash ${_script_path}/start_up.bash
+
 # the home directory of the main user will be the install directory
 WORKDIR ${_home_dir}
 # working under user account now
 USER system 
 
 # prep directories
-RUN mkdir wpi_codespace wpilib vscode 
+RUN mkdir wpilib vscode 
 RUN mkdir ./wpilib/2023
 
-# copy over env files for internal scripts
-ADD --chown=system --chmod=777 ./.env ./wpi_codespace/.env
-ADD --chown=system --chmod=777 ./config.conf ./wpi_codespace/config.conf
 
 # java 17 install 
-ADD --chown=system --chmod=777 ./java_install.bash ./wpi_codespace/java_install.bash
 # install script need to be ran with root
 USER 0 
-RUN ./wpi_codespace/java_install.bash
+RUN ${_script_path}/java_install.bash
 USER system
 # ENV JAVA_HOME=/home/system/wpilib/2023/jdk
 ENV PATH=/home/system/wpilib/2023/jdk/bin:${PATH}
 
 # set up symlinks to shared_cache volume
-ADD --chown=system --chmod=777 ./configure_mounting.bash ./wpi_codespace/configure_mounting.bash
-RUN ./wpi_codespace/configure_mounting.bash
+RUN ${_script_path}/configure_mounting.bash
 
 # download vscode cli 
-ADD --chown=system --chmod=777 ./downloader.bash ./wpi_codespace/downloader.bash
-RUN ./wpi_codespace/downloader.bash vscode ./vscode/bin/
+RUN ${_script_path}/downloader.bash vscode ./vscode/bin/
 ENV PATH=/home/system/vscode/bin:${PATH}
 ENV DONT_PROMPT_WSL_INSTALL=true 
 
@@ -63,8 +69,7 @@ ADD --chown=system --chmod=777 ./sources/vscode_userSettings/settings.json ./ser
 
 USER 0
 WORKDIR /home/system/
-ADD --chmod=777 ./start_up.bash ./wpi_codespace/start_up.bash
-CMD /home/system/wpi_codespace/start_up.bash
+CMD ${_script_path}/start_up.bash
 # CMD bash
 # EXPOSE 22
 # #EXPOSE 3389

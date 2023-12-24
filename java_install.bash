@@ -5,8 +5,8 @@ if [ $UID -ne 0 ]; then
     exit
 fi
 
-source /home/system/wpi_codespace/.env
-source /home/system/wpi_codespace/config.conf
+source /usr/share/wpi_codespace/.env
+source /usr/share/wpi_codespace/config.conf
 
 set -ex
 apt-get install -y --no-install-recommends openjdk-$JAVA_REL-jdk-headless

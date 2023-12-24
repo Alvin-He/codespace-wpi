@@ -1,7 +1,7 @@
 #! /bin/bash
 
-source /home/system/wpi_codespace/.env
-source /home/system/wpi_codespace/config.conf
+source /usr/share/wpi_codespace/.env
+source /usr/share/wpi_codespace/config.conf
 
 # $1-source $2-destination folder
 crate_symlinks() {
