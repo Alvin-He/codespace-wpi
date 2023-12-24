@@ -30,6 +30,7 @@ e_submit.onclick = async function(e) {
             default: return showNotification(NOTIFICATIONS.serverError(res.statusText));
         }
     }
+    alert(`Logout's not implenmented yet, so just clear cookies for ${location.origin} to logout.\n-\n Alvin He :)`)
     window.location = "/"
     console.log("Auth suscess")
 
