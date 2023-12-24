@@ -69,7 +69,7 @@ ADD --chown=system --chmod=777 ./sources/vscode_userSettings/settings.json ./ser
 
 USER 0
 WORKDIR /home/system/
-CMD ${_script_path}/start_up.bash
+CMD /usr/share/wpi_codespace/start_up.bash
 # CMD bash
 # EXPOSE 22
 # #EXPOSE 3389
