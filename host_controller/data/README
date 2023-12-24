@@ -6,4 +6,6 @@ to generate the passhash for a password, go to the login page and open dev-tools
 do `console.log(await computePasshash("<PLAIN_TEXt_PASSWORD>"))` into the console and it should print out a base64 encoded password.  
 
 **PLEASE** make sure you change the default passwords 
-ALL defaults are just frc4669
+ALL defaults are just frc4669 
+ 
+*ALSO MODIFY host_controller/nginx/conf.d/http/maps.conf so the containers are mapped correctly* 
