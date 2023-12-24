@@ -37,8 +37,8 @@ e_handel_boot_fail() {
 #check mounts
 mount_targets_to_check=( 
   "/home/system/wpilib/$COMP_YEAR/roborio"
-  "/home/system/.gradle/caches"
-  "/home/system/.gradle/permwrapper"
+  # "/home/system/.gradle/caches"
+  # "/home/system/.gradle/permwrapper"
 )
 try_fix_mounts() {
   #mounted, but missing cache directories/incorrect perms
@@ -48,8 +48,8 @@ try_fix_mounts() {
 
   # attempt to make the cache directories
   mkdir -p -m 0777 /mnt/shared_caches/roborio
-  mkdir -p -m 0777 /mnt/shared_caches/gradle/caches
-  mkdir -p -m 0777 /mnt/shared_caches/gradle/permwrapper
+  # mkdir -p -m 0777 /mnt/shared_caches/gradle/caches
+  # mkdir -p -m 0777 /mnt/shared_caches/gradle/permwrapper
 }
 # $1-try fixing mounts
 is_mounts_valid() {

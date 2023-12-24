@@ -9,5 +9,5 @@ crate_symlinks() {
 }
 
 crate_symlinks "/mnt/shared_caches/roborio" "/home/system/wpilib/$COMP_YEAR/" 
-crate_symlinks "/mnt/shared_caches/gradle/caches" "/home/system/.gradle" 
-crate_symlinks "/mnt/shared_caches/gradle/permwrapper" "/home/system/.gradle" 
+# crate_symlinks "/mnt/shared_caches/gradle/caches" "/home/system/.gradle" 
+# crate_symlinks "/mnt/shared_caches/gradle/permwrapper" "/home/system/.gradle" 
