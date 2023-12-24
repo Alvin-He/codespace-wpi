@@ -32,8 +32,8 @@ ADD --chmod=755 ./config.conf ${_script_path}/config.conf
 # internal scripts
 ADD --chmod=755 ./java_install.bash ${_script_path}/java_install.bash
 ADD --chmod=755 ./configure_mounting.bash ${_script_path}/configure_mounting.bash
-ADD --chmod=777 ./downloader.bash ${_script_path}/downloader.bash
-ADD --chmod=777 ./start_up.bash ${_script_path}/start_up.bash
+ADD --chmod=755 ./downloader.bash ${_script_path}/downloader.bash
+ADD --chmod=755 ./start_up.bash ${_script_path}/start_up.bash
 
 # the home directory of the main user will be the install directory
 WORKDIR ${_home_dir}
